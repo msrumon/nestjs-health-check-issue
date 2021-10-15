@@ -1,4 +1,8 @@
 services:
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
   mongo:
     image: mongo
     ports:
@@ -6,8 +10,10 @@ services:
   app:
     build: .
     environment:
-      MONGODB_URI: mongodb://mongo:27017/nest
+      RABBITMQ_URI: amqp://rabbitmq:5672
+      MONGODB_URI: mongodb://mongo:27017/app
     ports:
-      - 80:3000
+      - 3000:3000
     depends_on:
+      - rabbitmq
       - mongo
