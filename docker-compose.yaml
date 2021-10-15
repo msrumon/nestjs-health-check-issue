@@ -1,0 +1,13 @@
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+  app:
+    build: .
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/nest
+    ports:
+      - 80:3000
+    depends_on:
+      - mongo
